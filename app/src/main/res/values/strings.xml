@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Klangsalat</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+    <string name="show_map">Show Map</string>
+</resources>
