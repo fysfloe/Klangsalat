@@ -10,3 +10,4 @@ composer.lock  # Remove this one after you create a project
 Thumbs.db
 /nbproject/
 /app/storage/
+/app/src/main/res/klangsalat_sounds.zip
