@@ -82,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements
     private PdUiDispatcher dispatcher;
 
     private final static int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1234;
-    private final static float RADIUS = 100f;
+    private final static float RADIUS = 1000f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,7 +209,8 @@ public class MapsActivity extends FragmentActivity implements
         Collections.sort(poisToSort);
         int size = poisToSort.size();
         int sub = size >= 4 ? 4 : size;
-        poisToSend = poisToSort.subList(0, sub);
+
+        poisToSend = poisToSend != null ? checkPoisListOrder(poisToSort.subList(0, sub)) : poisToSort.subList(0, sub);
 
         mMap.clear(); // delete all markers
         mMarker = mMap.addMarker(mUserLocationMarker); // add user location marker
@@ -237,9 +238,25 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    private List<Poi> checkPoisListOrder(List<Poi> poisToSort) {
+        List<Poi> ordered = new ArrayList<>();
+
+        for (int i = 0; i < poisToSort.size(); i++) {
+            Poi currentPoi = poisToSort.get(i);
+            for (int j = 0; j < poisToSend.size(); j++) {
+                Poi currentPoiToSend = poisToSend.get(j);
+                if(currentPoi.getId() == currentPoiToSend.getId()) {
+                    ordered.add(j, currentPoi);
+                }
+            }
+        }
+
+        return ordered;
+    }
+
     private float getBearing(Location userLocation, Location poiLocation) {
         float bearing = userLocation.bearingTo(poiLocation);
-        return (mLookingAt + 180.0f) - bearing;
+        return mLookingAt - bearing;
     }
 
     @Override
@@ -349,7 +366,7 @@ public class MapsActivity extends FragmentActivity implements
         File dir = getFilesDir();
         Log.i(TAG, "loadPDPatch: " + dir);
         IoUtils.extractZipResource(getResources().openRawResource(R.raw.klangsalat_sounds), dir, true);
-        File pdPatch = new File(dir, "klangsalat_ready4app_rms.pd");
+        File pdPatch = new File(dir, "klangsalat_ready4app_realsounds.pd");
         PdBase.openPatch(pdPatch.getAbsolutePath());
     }
 
