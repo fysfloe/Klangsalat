@@ -147,7 +147,7 @@ public class MapsActivity extends FragmentActivity implements
         }
         mCurrentLocation = mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-        // mMap.setMyLocationEnabled(true);
+        mMap.setMyLocationEnabled(true);
         mMap.setLocationSource(this);
 
         // move camera to location
@@ -162,9 +162,9 @@ public class MapsActivity extends FragmentActivity implements
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_arrow)
         );
 
-        mMarker = mMap.addMarker(mUserLocationMarker);
+        //mMarker = mMap.addMarker(mUserLocationMarker);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
 
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         if (mLastLocation != null)
@@ -191,19 +191,29 @@ public class MapsActivity extends FragmentActivity implements
 
         // check the distance of every poi relative to the users current location
         for(int i = 0; i < poiList.size(); i++) {
-            String[] currentPoi = poiList.get(i);
+            String[] currentPoiString = poiList.get(i);
 
             Location poiLocation = new Location("poiLocation");
-            poiLocation.setLatitude(Double.parseDouble(currentPoi[1]));
-            poiLocation.setLongitude(Double.parseDouble(currentPoi[2]));
+            poiLocation.setLatitude(Double.parseDouble(currentPoiString[1]));
+            poiLocation.setLongitude(Double.parseDouble(currentPoiString[2]));
 
             float distance = location.distanceTo(poiLocation);
             float bearing = getBearing(location, poiLocation);
 
+            Poi currentPoi = new Poi(i, distance, bearing, poiLocation, currentPoiString[0], currentPoiString[3]);
+
             // check if distance is in range
             if(distance <= RADIUS) {
-                poisToSort.add(new Poi(i, distance, bearing, poiLocation));
+                poisToSort.add(currentPoi);
             }
+
+            LatLng poiLatLng = new LatLng(poiLocation.getLatitude(), poiLocation.getLongitude());
+
+            mMap.addMarker(new MarkerOptions()
+                    .position(poiLatLng)
+                    .title(currentPoi.getName())
+                    .snippet(currentPoi.getDescription())
+            );
         }
 
         Collections.sort(poisToSort);
@@ -212,41 +222,38 @@ public class MapsActivity extends FragmentActivity implements
 
         poisToSend = poisToSend != null ? checkPoisListOrder(poisToSort.subList(0, sub)) : poisToSort.subList(0, sub);
 
-        mMap.clear(); // delete all markers
-        mMarker = mMap.addMarker(mUserLocationMarker); // add user location marker
+        // mMap.clear(); // delete all markers
+        // mMarker = mMap.addMarker(mUserLocationMarker); // add user location marker
 
         // send the 4 pois to pd
         for (int i = 0; i < poisToSend.size(); i++) {
             Poi currentPoi = poisToSend.get(i);
-            float angle360 = getBearing(mCurrentLocation, currentPoi.getLocation()) + 180.0f;
-            currentPoi.setAngle(angle360);
-            PdBase.sendFloat("distance" + i, currentPoi.getDistance());
-            PdBase.sendFloat("angle" + i, angle360);
-            PdBase.sendFloat("id" + i, currentPoi.getId());
 
-            Log.i(TAG, "distance: "+currentPoi.getDistance());
+            if(currentPoi != null) {
+                PdBase.sendFloat("distance" + i, currentPoi.getDistance());
+                PdBase.sendFloat("angle" + i, currentPoi.getAngle());
+                PdBase.sendFloat("id" + i, currentPoi.getId());
 
-            LatLng poiLatLng = new LatLng(currentPoi.getLat(), currentPoi.getLng());
-
-            mMap.addMarker(new MarkerOptions()
-                    .position(poiLatLng)
-                    .title("Melbourne")
-                    .snippet("Population: 4,137,400")
-            );
-
-            Log.d(TAG, "poisToSort: " + currentPoi.getId() + ", distance: " + currentPoi.getDistance() + ", angle: " + currentPoi.getAngle());
+                Log.d(TAG, "poisToSort: " + currentPoi.getId() + ", distance: " + currentPoi.getDistance() + ", angle: " + currentPoi.getAngle());
+            }
         }
     }
 
     private List<Poi> checkPoisListOrder(List<Poi> poisToSort) {
         List<Poi> ordered = new ArrayList<>();
 
+        for (int i = 0; i < 4; i++) {
+            ordered.add(null);
+        }
+
         for (int i = 0; i < poisToSort.size(); i++) {
             Poi currentPoi = poisToSort.get(i);
             for (int j = 0; j < poisToSend.size(); j++) {
                 Poi currentPoiToSend = poisToSend.get(j);
-                if(currentPoi.getId() == currentPoiToSend.getId()) {
-                    ordered.add(j, currentPoi);
+                if (currentPoiToSend != null) {
+                    if(currentPoi.getId() == currentPoiToSend.getId()) {
+                        ordered.set(j, currentPoi);
+                    }
                 }
             }
         }
@@ -255,8 +262,13 @@ public class MapsActivity extends FragmentActivity implements
     }
 
     private float getBearing(Location userLocation, Location poiLocation) {
-        float bearing = userLocation.bearingTo(poiLocation);
-        return mLookingAt - bearing;
+        float diff = mLookingAt - userLocation.bearingTo(poiLocation);
+
+        if(diff < 0f) {
+            diff += 360f;
+        }
+
+        return diff;
     }
 
     @Override
@@ -340,9 +352,13 @@ public class MapsActivity extends FragmentActivity implements
                     for(int i = 0; i < poisToSend.size(); i++) {
                         Poi currentPoi = poisToSend.get(i);
 
-                        float angle360 = getBearing(mCurrentLocation, currentPoi.getLocation());
-                        currentPoi.setAngle(angle360);
-                        PdBase.sendFloat("angle" + i, angle360);
+                        if(currentPoi != null) {
+                            float angle360 = getBearing(mCurrentLocation, currentPoi.getLocation());
+                            if(angle360 <= 360f) {
+                                currentPoi.setAngle(angle360);
+                                PdBase.sendFloat("angle" + i, angle360);
+                            }
+                        }
                     }
                 }
             }

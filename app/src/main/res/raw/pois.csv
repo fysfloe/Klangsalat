@@ -1,29 +1,23 @@
 0; 0; 0; 0
-Rathausplatz ;48.2056524;15.6226846;"Musik, Kapellen, Militär; Theater; Sommermusik; staatsragend; im Sommer laut für Anrainer "
-Rathausgasse 2 ;48.2042555;15.6232392;Schubertiaden (Schubert arbeitet in Sankt Pölten an Alfonso & Estrella Oper 
-Wiener Tor / Linzer Tor (Linzer Straße 30) ;48.2023965;15.6218694;
-Bahnhof Sankt Pölten (Tor zur Stadt) ;48.2086086;15.6248606;
-Klosterviertel (Domplatz bis Klostergasse) ;48.2058744;15.62708883;Historische Klänge – Schmied, Tischler (Fixpunkte zuordnen) 
-Test Lidl; 48.213074;15.632815;Test
-Test 2; 48.212081;15.630283;Test2
-Test 3; 48.213353;15.629125;Test3
-Test 4; 48.214904;15.630863;Test4
-Holzviertel bei Stadtmuseum ;48.2041464;15.6225274;
-Ledererviertel (andere Seite von Riemerplatz) ;48.20329841;15.62468423;
-Marktviertel um Rathausplatz ;48.20458699;15.62264168;
-Test CookInn;48.197490;16.282323;Test
-Synagoge (Kantorwohnsitz) ;48.202519;15.6287947;
-Riemenplatz ;48.2045665;15.6265638;"Palais (Bürgermeister Wilhelm Völkl 1900); musikalische Aspekte (Völkl-Marsch), Bürgertheater "
-Domplatz ;48.2048519;15.6268528;"Märkte (Donnerstag, Samstag), Ausgrabung (Hauptfriedhof, 2e Kirche + kleine Kapelle, 8-18 Jhdt.); verbrannte Erde -> Glockengießergrube am Domplatz; Türmer am Domturm (Wachdienst mit Warnglocke); Walfahrt; Wirtshäuser, Gasthäuser (zurück bis 16.Jhdt.) "
-Franziskaner Kirche ;48.2058856;15.6231102;Brunnenrauschen 
-Domgasse 4 ;48.2047594;15.6250368;"19.Jhdt Instrumentenbauer Karl Stör (Biedermeier Gitarre); Bruder -> Mitbegründer des Musikervereins (Rathausplatz ehem. Hauptquartier mit Gedenktafel); mehrere Instrumentenbauer in Barock Zeit "
-Sparkasse ;48.2055238;15.6253016;
-Regierungsviertel ;48.2012;15.6333;Früher Trabrennplatz der Stadt, sog. Stadion, Vergnügungspark, Konzerte 
-Klangturm ;48.2005947;15.6327506;Klingt nicht mehr -> nur mehr Plattform, vielleicht nutzbar 
-Festspielhaus ;48.2012239;15.6311725;
-Radio Niederösterreich ;48.199096;15.630506;
-Schützenkompanie ;48.1970834;15.6312026;"Ältester Verein der Stadt -> ehemaliges Schützenhaus (Kaiser Franz Joseph zum Schießstand); jetzt Stadtsaal (Tonkünstler jetzt im Festspielhaus) "
-Hammerpark ;48.1973616;15.6289907;
-Traisen ;48.19736126;15.63369513;Klang des Flusses, Freizeitgeräusche, Orientierungshilfe (fließt durch ganz Sankt Pölten) 
-Hallenbad (Dampf und Wannenbad) ;48.2048344;15.6199315;
-Kaserne ;48.2036684;15.6190237;
+Rathausplatz;48.205163;15.622936;Menschen, Cafes, Feste, Musik, Konzert
+Rathausgasse 2;48.2042555;15.6232392;Eduard Erdmann - Schubert
+Bahnhof Sankt Pölten (Tor zur Stadt);48.207930;15.624677;Zug fährt vorbei, Dampflock, Pfeifen (Schaffner), Zug über Schiene, Schritte, Menschen
+Klosterviertel (Domplatz bis Klostergasse);48.2058744;15.62708883;Kirchengesang, Gebete, Choräle, Orgel
+Holzviertel bei Stadtmuseum;48.2041464;15.6225274;Säge, hacken, hobeln, Klanghölz, Nageln von Brettern
+Ledererviertel (andere Seite von Riemerplatz);48.20329841;15.62468423;Schuster, Leder schlagen, Nähmaschine, Kuh, mit Scheere Leder schneiden
+Marktviertel um Rathausplatz;48.205247;15.623834;Marktschreie, Kinder laufen und lachen, Pferde (+Wagen), Münzenklimpern, Registrierkassa 
+Zentrale der städtischen Feuerwehr (hinter Rathaus);0;0;Feuerrasseln, Sirene, Wasserstrahl
+Synagoge (Kantorwohnsitz);48.202519;15.6287947;Jüdischer Gesang
+Riemerplatz;48.2045665;15.6265638;Theateraufführung, barocke Musik, E-Werk?
+Domplatz;48.2048519;15.6268528;Schaufel, graben, Hacke auf Stein, alter Friedhof (düstere Klänge), Glocke gießen und leuten
+Franziskaner Kirche;48.2058856;15.6231102;Brunnenrauschen, Mönchgesang, Orgel, Messe
+Domgasse 4;48.2047594;15.6250368;Biedermeier Gitarre, Holzbearbeitungsgeräusche (in Bezug auf Gitarre)
+Sparkasse;48.2055238;15.6253016;Geld klingeln, Münzen & Scheine zählen, Kontoauszugdrucker
+Regierungsviertel;48.2012;15.6333;Papierrascheln, div. Handyklingeltöne, Diskussion mit Zwischenrufen, Palavar, Trabrennbahn (Hufen, Galopp)
+Klangturm;48.2005947;15.6327506;Flos Stille Komposition & CRAZZYYY!!!!
+Festspielhaus;48.2012239;15.6311725;Orchester stimmen, Applaus, Stimmengemurmel
+ORF Landesstudio Niederösterreich;48.199096;15.630506;Frequenzsuchen Rauschen, Zapping, Alter Fernseher einschalten
+Schützenkompanie;48.1970834;15.6312026;Schussgeräusche, Kommandos, Laden der Waffe, Kompanie Marschgeräusche
+Hammerpark;48.1973616;15.6289907;Vogelgezwitscher, Summen der Bienen, Hundegebell, Blätterrascheln
+Traisen;48.19736126;15.63369513;Schwäne (aggresive), Enten, Fahrrad auf Kiesel, Wasser
+Kaserne;48.2036684;15.6190237;Tagwache, Zapfenstreich, Exerziergeräusche, marschieren

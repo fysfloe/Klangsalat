@@ -8,12 +8,16 @@ public class Poi implements Comparable<Poi> {
     private float id;
     private float distance;
     private float angle;
+    private String name;
+    private String description;
 
-    public Poi(int id, float distance, float angle, Location location) {
+    public Poi(int id, float distance, float angle, Location location, String name, String description) {
         this.id = id;
         this.distance = distance;
         this.angle = angle;
         this.location = location;
+        this.name = name;
+        this.description = description;
     }
 
     public float getId() {
@@ -38,6 +42,14 @@ public class Poi implements Comparable<Poi> {
 
     public double getLng() {
         return this.location.getLongitude();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public void setAngle(float angle) {
