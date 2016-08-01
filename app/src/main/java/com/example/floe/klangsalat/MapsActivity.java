@@ -110,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-        InputStream inputStream = getResources().openRawResource(R.raw.pois);
+        InputStream inputStream = getResources().openRawResource(R.raw.pois_test);
         CSVReader csv = new CSVReader(inputStream);
         poiList = csv.read();
 
@@ -155,14 +155,14 @@ public class MapsActivity extends FragmentActivity implements
         double currentLongitude = mLastLocation.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
 
-        mUserLocationMarker = new MarkerOptions()
+        /*mUserLocationMarker = new MarkerOptions()
                 .position(latLng)
                 .anchor(0.5f, 0.5f)
                 .flat(true)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_arrow)
         );
 
-        //mMarker = mMap.addMarker(mUserLocationMarker);
+        mMarker = mMap.addMarker(mUserLocationMarker);*/
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
 
@@ -232,15 +232,19 @@ public class MapsActivity extends FragmentActivity implements
             if(currentPoi != null) {
                 PdBase.sendFloat("distance" + i, currentPoi.getDistance());
                 PdBase.sendFloat("angle" + i, currentPoi.getAngle());
-                PdBase.sendFloat("id" + i, currentPoi.getId());
+                if(!currentPoi.playing) PdBase.sendFloat("id" + i, currentPoi.getId());
 
-                Log.d(TAG, "poisToSort: " + currentPoi.getId() + ", distance: " + currentPoi.getDistance() + ", angle: " + currentPoi.getAngle());
+                Log.d(TAG, "receive " + i + ": " + currentPoi.getId() + ", distance: " + currentPoi.getDistance() + ", angle: " + currentPoi.getAngle());
             }
         }
     }
 
     private List<Poi> checkPoisListOrder(List<Poi> poisToSort) {
         List<Poi> ordered = new ArrayList<>();
+        List<Poi> helper = new ArrayList<>();
+        int[] idHelper = new int[4];
+        int idHelperIndex = 0;
+
 
         for (int i = 0; i < 4; i++) {
             ordered.add(null);
@@ -248,13 +252,31 @@ public class MapsActivity extends FragmentActivity implements
 
         for (int i = 0; i < poisToSort.size(); i++) {
             Poi currentPoi = poisToSort.get(i);
+            boolean found = false;
             for (int j = 0; j < poisToSend.size(); j++) {
                 Poi currentPoiToSend = poisToSend.get(j);
                 if (currentPoiToSend != null) {
                     if(currentPoi.getId() == currentPoiToSend.getId()) {
                         ordered.set(j, currentPoi);
+                        currentPoi.play();
+                        found = true;
+                        break;
                     }
                 }
+            }
+            if (!found) {
+                helper.add(currentPoi);
+                idHelper[idHelperIndex] = i;
+                idHelperIndex++;
+            }
+        }
+
+        int j = 0;
+
+        for (int i = 0; i < ordered.size(); i++) {
+            if(ordered.get(i) == null) {
+                ordered.set(i, helper.get(j));
+                j++;
             }
         }
 
@@ -372,7 +394,7 @@ public class MapsActivity extends FragmentActivity implements
 
     private void initPD() throws IOException {
         int sampleRate = AudioParameters.suggestSampleRate();
-        PdAudio.initAudio(sampleRate, 0, 2, 8, true);
+        PdAudio.initAudio(sampleRate, 0, 2, 200, true);
 
         dispatcher = new PdUiDispatcher();
         PdBase.setReceiver(dispatcher);

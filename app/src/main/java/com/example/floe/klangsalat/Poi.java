@@ -10,6 +10,7 @@ public class Poi implements Comparable<Poi> {
     private float angle;
     private String name;
     private String description;
+    public boolean playing;
 
     public Poi(int id, float distance, float angle, Location location, String name, String description) {
         this.id = id;
@@ -18,7 +19,10 @@ public class Poi implements Comparable<Poi> {
         this.location = location;
         this.name = name;
         this.description = description;
+        this.playing = false;
     }
+
+    public void play() { this.playing = true; }
 
     public float getId() {
         return this.id;
